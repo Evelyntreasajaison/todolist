@@ -9,13 +9,22 @@ def add_task():
     else:
         messagebox.showwarning("Warning", "Please enter a task!")
 
+
 def delete_task():
     try:
         selected_task_index = tasks_listbox.curselection()[0]
         tasks_listbox.delete(selected_task_index)
-        save_tasks()
+
+        
+        tasks = tasks_listbox.get(0, tk.END)
+        with open("tasks.txt", "w") as f:
+            for task in tasks:
+                f.write(task + "\n")
+
+        messagebox.showinfo("Success", "Task deleted successfully!")
     except:
         messagebox.showwarning("Warning", "Please select a task to delete!")
+
 
 def save_tasks():
     tasks = tasks_listbox.get(0, tk.END)
